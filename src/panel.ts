@@ -107,6 +107,27 @@ function toneFor(status: string): 'warning' | 'success' | 'neutral' | 'info' {
   return 'info';
 }
 
+/**
+ * ZenTao keeps 优先级 and 严重程度 as a 1–4 level, lowest number first. The list
+ * draws both so a bug's rank is readable without opening it; a value that is not
+ * a level (some instances hand back a label) still shows, just in a neutral tone.
+ */
+function toneForLevel(level: string): 'error' | 'warning' | 'info' | 'neutral' {
+  if (level === '1') return 'error';
+  if (level === '2') return 'warning';
+  if (level === '3') return 'info';
+  return 'neutral';
+}
+
+/** One 等级 badge for a bug row; `null` when the instance left the field empty. */
+function levelBadge(kind: string, value: string): HTMLElement | null {
+  const level = (value || '').trim();
+  if (!level) return null;
+  const host = h('span');
+  scratch(mountBadge(host, { label: `${kind} ${level}`, tone: toneForLevel(level) }));
+  return host;
+}
+
 function nameOf(account: string): string {
   if (!account) return '未指派';
   const member = state.members.find((entry) => entry.account === account);
@@ -684,9 +705,13 @@ function buildBugRow(bug: Bug): HTMLElement {
   const head = h('div', 'zt-bug-head');
   const badgeHost = h('span');
   scratch(mountBadge(badgeHost, { label: statusLabel(bug.status), tone: toneFor(bug.status) }));
+  const levels = [levelBadge('优先级', bug.pri), levelBadge('严重程度', bug.severity)].filter(
+    (node): node is HTMLElement => node !== null,
+  );
   head.append(
     h('span', 'zt-bug-id', `#${bug.id}`),
     badgeHost,
+    ...levels,
     h('span', 'zt-muted', `指派给 ${nameOf(bug.assignedTo)}`),
     h('span', 'zt-spacer'),
     h('span', 'zt-meta', (bug.openedDate || '').slice(0, 10)),

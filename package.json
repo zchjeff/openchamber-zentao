@@ -1,6 +1,6 @@
 {
   "name": "openchamber-zentao-assistant",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "禅道助手 — 在 OpenChamber 右侧面板里连接禅道、按项目/迭代/成员筛选 bug，并把 bug 交给当前会话做 AI 修复。",
   "type": "module",
