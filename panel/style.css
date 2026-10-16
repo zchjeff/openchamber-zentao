@@ -104,6 +104,24 @@ body {
   flex: 0 0 auto;
 }
 
+/* The bug list's refresh button is filled with the accent colour so it reads as
+   the obvious action when the list looks stale — the rest of the toolbar is
+   neutral chrome. */
+.zt-refresh .oc-sdk-btn[data-variant='default'] {
+  font-weight: 600;
+  color: var(--oc-primary-fg, var(--oc-bg, #fff));
+  background: var(--oc-primary, currentColor);
+  border-color: var(--oc-primary, currentColor);
+}
+
+.zt-refresh .oc-sdk-btn[data-variant='default']:hover {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.14));
+}
+
+.zt-refresh .oc-sdk-btn[data-variant='default']:active {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.14));
+}
+
 .zt-muted {
   color: var(--oc-muted, rgba(128, 128, 128, 1));
   font-size: 0.8125rem;

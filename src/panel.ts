@@ -484,11 +484,14 @@ function buildFilters(): void {
 }
 
 function buildToolbar(): void {
-  const refreshHost = h('span', 'zt-btn');
-  scratch(
+  // The toolbar is built once and never re-rendered, so its button must live
+  // with the panel: `scratch` would hand it to the next `render()` to dispose,
+  // which removes it from the DOM before it is ever seen.
+  const refreshHost = h('span', 'zt-btn zt-refresh');
+  keep(
     mountButton(refreshHost, {
       label: '刷新列表',
-      variant: 'secondary',
+      variant: 'default',
       size: 'sm',
       onClick: () => void loadBugs(true),
     }),
