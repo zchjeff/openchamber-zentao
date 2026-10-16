@@ -1,0 +1,293 @@
+/* Layout only: colours, fonts and control styling come from the host theme
+   (applyHostReady writes --oc-* onto the root) and from the UI kit. */
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.zt {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 100%;
+  font-family: var(--oc-font, inherit);
+  color: var(--oc-fg, inherit);
+}
+
+.zt-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--oc-border, rgba(128, 128, 128, 0.35));
+  border-radius: var(--oc-radius, 9px);
+  padding: 10px;
+  background: var(--oc-elevated, transparent);
+}
+
+.zt-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zt-title {
+  font-weight: 600;
+}
+
+.zt-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zt-body[hidden] {
+  display: none;
+}
+
+.zt-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zt-split > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.zt-with-button {
+  align-items: flex-end;
+}
+
+.zt-class {
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.zt-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.zt-grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.zt-spacer {
+  flex: 1 1 auto;
+}
+
+.zt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.zt-btn {
+  display: inline-flex;
+}
+
+.zt-btn-tail {
+  flex: 0 0 auto;
+}
+
+.zt-muted {
+  color: var(--oc-muted, rgba(128, 128, 128, 1));
+  font-size: 0.8125rem;
+}
+
+.zt-meta {
+  color: var(--oc-muted, rgba(128, 128, 128, 1));
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.zt-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zt-pad {
+  padding: 16px 0;
+}
+
+.zt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zt-bug {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--oc-border, rgba(128, 128, 128, 0.35));
+  border-radius: var(--oc-radius, 9px);
+  background: var(--oc-elevated, transparent);
+}
+
+.zt-bug.is-selected {
+  border-color: var(--oc-primary, currentColor);
+  box-shadow: inset 0 0 0 1px var(--oc-primary, currentColor);
+}
+
+.zt-bug-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.zt-bug-id {
+  font-family: var(--oc-mono, monospace);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.zt-bug-title {
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Preview dialog: a panel-local modal drawn over everything. */
+.zt-modal:empty {
+  display: none;
+}
+
+.zt-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 16px;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.zt-modal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid var(--oc-border, rgba(128, 128, 128, 0.35));
+  border-radius: var(--oc-radius, 9px);
+  background: var(--oc-bg, var(--oc-elevated, #fff));
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.zt-modal-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zt-modal-title {
+  font-weight: 600;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.zt-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zt-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 10px;
+  font-size: 0.8125rem;
+}
+
+.zt-fact-k {
+  color: var(--oc-muted, rgba(128, 128, 128, 1));
+  white-space: nowrap;
+}
+
+.zt-fact-v {
+  word-break: break-word;
+}
+
+.zt-label {
+  color: var(--oc-muted, rgba(128, 128, 128, 1));
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.zt-steps {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  max-height: 220px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.zt-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--oc-warning, rgba(200, 150, 0, 0.6));
+  border-radius: var(--oc-radius, 9px);
+  background: var(--oc-elevated, transparent);
+}
+
+.zt-confirm-title {
+  font-weight: 600;
+}
+
+.zt-pre {
+  margin: 0;
+  padding: 8px;
+  overflow: auto;
+  font-family: var(--oc-mono, monospace);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: pre;
+  color: var(--oc-muted, rgba(128, 128, 128, 1));
+  background: var(--oc-subtle, rgba(128, 128, 128, 0.1));
+  border-radius: calc(var(--oc-radius, 9px) - 3px);
+}
+
+.zt-pager {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.zt-foot {
+  margin-top: auto;
+  padding-top: 6px;
+  border-top: 1px solid var(--oc-border, rgba(128, 128, 128, 0.25));
+  color: var(--oc-muted, rgba(128, 128, 128, 1));
+  font-size: 0.75rem;
+}
+
+.zt-banner:empty {
+  display: none;
+}
