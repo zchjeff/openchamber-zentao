@@ -109,23 +109,42 @@ function toneFor(status: string): 'warning' | 'success' | 'neutral' | 'info' {
 
 /**
  * ZenTao keeps 优先级 and 严重程度 as a 1–4 level, lowest number first. The list
- * draws both so a bug's rank is readable without opening it; a value that is not
- * a level (some instances hand back a label) still shows, just in a neutral tone.
+ * draws them the way ZenTao's own bug table does — 严重程度 as a coloured flame
+ * (级别 column), 优先级 as a circled digit ①②③④ (P column) — so a bug's rank
+ * reads at a glance without opening it. The palette lives in `panel/style.css`,
+ * keyed by the `data-kind` / `data-level` attributes written here.
  */
-function toneForLevel(level: string): 'error' | 'warning' | 'info' | 'neutral' {
-  if (level === '1') return 'error';
-  if (level === '2') return 'warning';
-  if (level === '3') return 'info';
-  return 'neutral';
-}
+const SEVERITY_FLAME =
+  'M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z';
 
-/** One 等级 badge for a bug row; `null` when the instance left the field empty. */
-function levelBadge(kind: string, value: string): HTMLElement | null {
+/** ①②③④ for 优先级 1–4; a value that is not a level falls back to itself. */
+const CIRCLED_DIGITS = ['①', '②', '③', '④'];
+
+/** One 等级 marker for a bug row; `null` when the instance left the field empty. */
+function levelBadge(kind: '优先级' | '严重程度', value: string): HTMLElement | null {
   const level = (value || '').trim();
   if (!level) return null;
-  const host = h('span');
-  scratch(mountBadge(host, { label: `${kind} ${level}`, tone: toneForLevel(level) }));
-  return host;
+
+  const marker = h('span', 'zt-level');
+  marker.dataset.kind = kind;
+  marker.dataset.level = level;
+  // The marker is icon-only, so the label survives as a tooltip.
+  marker.title = `${kind} ${level}`;
+
+  if (kind === '严重程度') {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'currentColor');
+    svg.setAttribute('aria-hidden', 'true');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', SEVERITY_FLAME);
+    svg.append(path);
+    marker.append(svg, h('span', 'zt-level-num', level));
+  } else {
+    const digit = CIRCLED_DIGITS[Number(level) - 1];
+    marker.append(h('span', 'zt-level-num', digit ?? level));
+  }
+  return marker;
 }
 
 function nameOf(account: string): string {

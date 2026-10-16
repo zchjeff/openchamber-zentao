@@ -177,6 +177,34 @@ body {
   font-weight: 600;
 }
 
+/* 等级标记：严重程度画成火苗（级别列），优先级画成带圈数字（P 列），配色对齐
+   禅道原生 bug 列表。这里用固定色而不是主题色 —— 红/橙/黄/蓝本身就是等级的语义。 */
+.zt-level {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.8125rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  cursor: help;
+}
+
+.zt-level svg {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+}
+
+.zt-level[data-kind='严重程度'][data-level='1'] { color: #e5484d; }
+.zt-level[data-kind='严重程度'][data-level='2'] { color: #f76b15; }
+.zt-level[data-kind='严重程度'][data-level='3'] { color: #e2b100; }
+.zt-level[data-kind='严重程度'][data-level='4'] { color: var(--oc-muted, rgba(128, 128, 128, 1)); }
+
+.zt-level[data-kind='优先级'][data-level='1'] { color: #e5484d; }
+.zt-level[data-kind='优先级'][data-level='2'] { color: #f76b15; }
+.zt-level[data-kind='优先级'][data-level='3'] { color: #3b82f6; }
+.zt-level[data-kind='优先级'][data-level='4'] { color: var(--oc-muted, rgba(128, 128, 128, 1)); }
+
 .zt-bug-title {
   line-height: 1.4;
   word-break: break-word;
